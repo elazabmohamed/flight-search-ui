@@ -1,0 +1,45 @@
+{
+  "flights": [
+    {
+      "id": 1,
+      "flightNumber": "ABC123",
+      "departureAirport": "JFK",
+      "departureLocation": "New York",
+      "arrivalAirport": "LAX",
+      "arrivalLocation": "California",
+      "departureDate": "Mon Jan 15 2024 12:30:00 GMT+0300 (GMT+03:00)",
+      "returningDate": "Thu Jan 18 2024 15:45:00 GMT+0300 (GMT+03:00)",
+      "oneWay": false,
+      "duration": "4 hours, 15 minutes",
+      "price": "250",
+      "airline": "Turkish Airlines"
+    },
+    {
+      "id": 2,
+      "flightNumber": "XYZ789",
+      "departureAirport": "LAX",
+      "departureLocation": "Cairo",
+      "arrivalAirport": "ORD",
+      "arrivalLocation": "Istanbul",
+      "departureDate": "Sun Jan 20 2024 08:15:00 GMT+0300 (GMT+03:00)",
+      "returningDate": "Thu Jan 25 2024 15:45:00 GMT+0300 (GMT+03:00)",
+      "oneWay": false,
+      "duration": "1 hours, 35 minutes",
+      "price": "1400",
+      "airline": "American Airlines"
+    },
+    {
+      "id": 3,
+      "flightNumber": "JKL456",
+      "departureAirport": "ORD",
+      "departureLocation": "New York",
+      "arrivalAirport": "SFO",
+      "arrivalLocation": "London",
+      "departureDate": "Thu Feb 01 2024 14:00:00 GMT+0300 (GMT+03:00)",
+      "oneWay": true,
+      "duration": "2 hours, 0 minutes",
+      "price": "500",
+      "airline": "Emirates"
+    }
+  ]
+}
