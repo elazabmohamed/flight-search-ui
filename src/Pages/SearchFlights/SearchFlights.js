@@ -1,12 +1,29 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
+// import DatePicker from 'react-datepicker';
+// import 'react-datepicker/dist/react-datepicker.css';
 
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete'
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import dayjs from 'dayjs';
+
+import { FormControl, InputLabel, Input, FormControlLabel, Checkbox, Button, FormHelperText } from '@mui/material';
+
+
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import TableSortLabel from '@mui/material/TableSortLabel';
+import Alert from '@mui/material/Alert';
+
+
 
 import airports from '../../Common/Data/airports.json'
+import { defaultLogo } from '../../Images/ImageComponents';
+import './searchFlights.css'
+import Loading from '../../Common/Components/Loading/Loading';
 const API_URL = 'http://localhost:3001/flights';
 
 
@@ -171,118 +188,149 @@ const SearchFlights = () => {
     };
 
 
+    const renderRequestForm = () => {
+        return (
+            <div className='search_form'>
+                <FormControl>
+                    <InputLabel htmlFor="departureAirportInput">
+                        Departure Airport:
+                    </InputLabel>
+                    <Input id="departureAirportInput"
+                        aria-describedby="my-helper-text"
+                        value={departureAirportFilter}
+                        onChange={(e) => setDepartureAirportFilter(e.target.value)}
+                        className='search_form-input'
+                    />
+                </FormControl>
+                <FormControl>
+                    <InputLabel htmlFor="arrivalAirportInput">
+                        Arrival Airport:
+                    </InputLabel>
+                    <Input id="arrivalAirportInput"
+                        aria-describedby="my-helper-text"
+                        value={arrivalAirportFilter}
+                        onChange={(e) => setArrivalAirportFilter(e.target.value)}
+                        className='search_form-input'
+                    />
+                </FormControl>
+                <br />
 
-    const renderContent = () => {
+                <FormControl>
+                    <div className='search_form-input'>
+
+                        <LocalizationProvider dateAdapter={AdapterDayjs}>
+                            <DatePicker
+                                label="Select departure date"
+                                selected={departureDateFilter}
+                                onChange={date => setDepartureDateFilter(date)}
+                                dateFormat="dd/MM/yyyy" // Set the date format to "day/month/year"
+                                className='search_form-input'
+                            />
+                        </LocalizationProvider>
+                    </div>
+
+                </FormControl>
+
+                {!isOneWay && (
+                    <FormControl>
+                        <div className='search_form-input'>
+                            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                <DatePicker
+                                    label="Select returning date"
+                                    selected={returningDateFilter}
+                                    onChange={date => setReturningDateFilter(date)}
+                                    dateFormat="dd/MM/yyyy" // Set the date format to "day/month/year"
+                                />
+                            </LocalizationProvider>
+                        </div>
+                    </FormControl>
+                )}
+                <br />
+
+                <FormControl>
+                    <FormControlLabel control={<Checkbox checked={isOneWay}
+                        onChange={() => setIsOneWay(!isOneWay)} className='search_form-input' />} label="One Way Flight" />
+                </FormControl>
+
+                <Button
+                    color="primary"
+                    disabled={false}
+                    size="large"
+                    variant="outlined"
+                    onClick={handleSearch}
+                >
+                    <span>Search Flights</span>
+                </Button>
+            </div>
+        );
+    }
+
+
+
+    const renderRequestResults = () => {
+
         if (isLoading) {
-            return <p>Loading...</p>;
+            return <Loading />;
         }
 
         if (filteredFlights.length === 0) {
-            return <p>No available flights at the moment.</p>;
+            // return <p>No available flights at the moment.</p>;
+            return <Alert severity="error">No available flights at the moment.</Alert>
         }
 
-        return (<table>
-            <thead>
-                <tr>
-                    <th>Flight Number</th>
-                    <th>Departure Airport</th>
-                    <th>Departure Location</th>
-                    <th onClick={handleDepartureSort}>Departure Date</th>
-                    <th>Arrival Airport</th>
-                    <th>Arrival Location</th>
-                    <th onClick={handleReturnSort}>Return Date</th>
-                    <th onClick={handleDurationSort}>Duration</th>
-                    <th onClick={handlePriceSort}>Price in USD</th>
-                    <th>Airline </th>
-                </tr>
-            </thead>
-            <tbody>
-                {filteredFlights.map(flight => (
-                    <tr key={flight.id}>
-                        <td>{flight.flightNumber}</td>
-                        <td>{flight.departureAirport}</td>
-                        <td>{flight.departureLocation}</td>
-                        <td>{formatDateOutput(new Date(flight.departureDate))}</td>
-                        <td>{flight.arrivalAirport}</td>
-                        <td>{flight.arrivalLocation}</td>
-                        <td>{formatDateOutput(flight.returningDate)}</td>
-                        <td>{flight.duration}</td>
-                        <td>{flight.price}</td>
-                        <td>{flight.airline}</td>
-                    </tr>
-                ))}
-            </tbody>
-        </table>);
+        return (
+            <div className="results_table">
+                <TableContainer>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Flight Number</TableCell>
+                            <TableCell>Departure Airport</TableCell>
+                            <TableCell>Arrival Airport</TableCell>
+                            <TableCell>Departure Location</TableCell>
+                            <TableCell>Arrival Location</TableCell>
+                            <TableCell onClick={handleDepartureSort}>
+                                <TableSortLabel>
+                                    Departure Date
+                                </TableSortLabel>
+                            </TableCell>
+                            <TableCell onClick={handleReturnSort}>Return Date</TableCell>
+                            <TableCell onClick={handleDurationSort}>Duration</TableCell>
+                            <TableCell onClick={handlePriceSort}>Price in USD</TableCell>
+                            <TableCell>Airline </TableCell>
+                        </TableRow>
 
+                        {filteredFlights.map(flight => (
+                            <TableRow key={flight.id}>
+                                <TableCell>{flight.flightNumber}</TableCell>
+                                <TableCell>{flight.departureAirport}</TableCell>
+                                <TableCell>{flight.arrivalAirport}</TableCell>
+                                <TableCell>{flight.departureLocation}</TableCell>
+                                <TableCell>{flight.arrivalLocation}</TableCell>
+                                <TableCell>{formatDateOutput(new Date(flight.departureDate))}</TableCell>
+                                <TableCell>{formatDateOutput(flight.returningDate)}</TableCell>
+                                <TableCell>{flight.duration}</TableCell>
+                                <TableCell>{flight.price}</TableCell>
+                                <TableCell>{flight.airline}</TableCell>
+                            </TableRow>
+                        ))}
+
+                    </TableHead>
+                </TableContainer>
+            </div>
+        );
     };
 
 
-
     return (
-        <div>
-            <label>Departure Airport:</label>
-            <input
-                type="text"
-                placeholder="Enter departure airport..."
-                id="departureAirportInput"
-                value={departureAirportFilter}
-                onChange={(e) => setDepartureAirportFilter(e.target.value)}
-            />
-            {/* <Autocomplete
-                disablePortal
-                id="combo-box-demo"
-                options={airports}
-                getOptionLabel={(option) => option}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="Movie" />}
-            /> */}
-            <br />
-
-            <label>Arrival Airport:</label>
-            <input
-                type="text"
-                placeholder="Enter arrival airport..."
-                id="arrivalAirportInput"
-                value={arrivalAirportFilter}
-                onChange={(e) => setArrivalAirportFilter(e.target.value)}
-            />
-            <br />
-
-            <label>Departure Date:</label>
-            <DatePicker
-                placeholderText="Select departure date"
-                selected={departureDateFilter}
-                onChange={date => setDepartureDateFilter(date)}
-                dateFormat="dd/MM/yyyy" // Set the date format to "day/month/year"
-            />
-            <br />
-
-            <label>
-                One Way Flight:
-                <input
-                    type="checkbox"
-                    checked={isOneWay}
-                    onChange={() => setIsOneWay(!isOneWay)}
-                />
-            </label>
-            <br />
-
-            {!isOneWay && (
-                <>
-                    <label>Returning Date:</label>
-                    <DatePicker
-                        placeholderText="Select returning date"
-                        selected={returningDateFilter}
-                        onChange={date => setReturningDateFilter(date)}
-                        dateFormat="dd/MM/yyyy" // Set the date format to "day/month/year"
-                    />
-                    <br />
-                </>
-            )}
-
-            <button onClick={handleSearch}>Search</button>
-
-            {renderContent()}
+        <div className='background'>
+            <div className='background_container'>
+                <div className='logo_container'>
+                    <img src={defaultLogo} className='logo' />
+                </div>
+                <div className='search_header'>find your flight..</div>
+                {renderRequestForm()}
+                {renderRequestResults()}
+            </div>
         </div>
     );
 };

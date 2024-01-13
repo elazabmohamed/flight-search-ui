@@ -1,0 +1,70 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap');
+
+.background{
+    /* background-color: #D9AFD9;
+    background-color: linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%); */
+
+    height: max-content
+}
+
+
+.background_container{
+    padding-bottom: 0;
+    margin-bottom: 0;
+
+    max-width: 1200px;
+    margin: auto;
+}
+
+.logo_container{
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+.logo{
+    width: 40%;
+    min-width: 250px;
+    height: auto;
+    margin: 2rem;
+}
+
+.search_header{
+    padding: 1rem;
+    font-family: "Open Sans", sans-serif;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: #1b69bc;
+    font-size: 22px;
+    font-weight: 800;
+    text-align:left;
+}
+
+.search_form{
+    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+}
+
+.search_form-input{
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+    margin-top:1rem;
+    margin-bottom: 1.5rem;
+}
+
+.search_form-input_label{
+    color: #1b69bc;
+}
+
+.results_table{
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
