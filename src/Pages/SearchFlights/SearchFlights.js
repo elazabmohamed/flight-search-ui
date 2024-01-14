@@ -53,7 +53,7 @@ const SearchFlights = () => {
     const scrollRef = useRef(null);
 
     useEffect(() => {
-        document.title = "Search Flight | amadeus";
+        document.title = "Search Flights | amadeus";
     });
 
     useEffect(() => {
