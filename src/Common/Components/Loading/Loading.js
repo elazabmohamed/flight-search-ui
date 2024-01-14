@@ -4,7 +4,7 @@ import './loading.css'
 export default function Loading() {
     return (
         <div className='loading_container'>
-            <div class="loader">
+            <div className="loader">
                 <span></span>
                 <span></span>
                 <span></span>

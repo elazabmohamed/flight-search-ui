@@ -4,6 +4,7 @@
     align-items: center;
     display: flex;
     flex-direction: column;
+    padding: 2rem;
   }
   
   .loading_container h1{
@@ -19,7 +20,7 @@
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    background: linear-gradient(102deg, #ff8811 0%, #FFE259 100%);
+    background:  linear-gradient(102deg, #1b69bc 0%, #bac5ff 100%);
     animation: animate 0.5s linear infinite;
   }
   

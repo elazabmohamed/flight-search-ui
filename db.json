@@ -3,7 +3,7 @@
     {
       "id": 1,
       "flightNumber": "ABC123",
-      "departureAirport": "JFK",
+      "departureAirport": "Aalborg Airport",
       "departureLocation": "New York",
       "arrivalAirport": "LAX",
       "arrivalLocation": "California",
@@ -19,7 +19,7 @@
       "flightNumber": "XYZ789",
       "departureAirport": "LAX",
       "departureLocation": "Cairo",
-      "arrivalAirport": "ORD",
+      "arrivalAirport": "Anaa Airport",
       "arrivalLocation": "Istanbul",
       "departureDate": "Sun Jan 20 2024 08:15:00 GMT+0300 (GMT+03:00)",
       "returningDate": "Thu Jan 25 2024 15:45:00 GMT+0300 (GMT+03:00)",
