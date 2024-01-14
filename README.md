@@ -13,6 +13,7 @@ Or check if it's a one way flight.
 ![App Screenshot](./src/Images/README/case_study_2.png)
 
 And see the available fligts:
+
 ![App Screenshot](./src/Images/README/case_study_3.png)
 
 ## Running
