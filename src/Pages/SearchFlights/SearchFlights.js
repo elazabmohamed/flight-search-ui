@@ -52,19 +52,13 @@ const SearchFlights = () => {
     const [rowsPerPage, setRowsPerPage] = useState(rowsPerPageOptions[0]);
     const scrollRef = useRef(null);
 
-    //  A function used to scroll down to results
-    function scrollDown() {
-        scrollRef.current?.scrollIntoView({ block: "start", behavior: 'smooth' });
-    }
+    useEffect(() => {
+        document.title = "Search Flight | amadeus";
+    });
 
     useEffect(() => {
         fetchData();
     }, []);
-
-    // Reset all state variables
-    const handleClearAllInputs = () => {
-        setClearAllInputs(true);
-    };
 
     useEffect(() => {
         if (clearAllInputs) {
@@ -78,6 +72,17 @@ const SearchFlights = () => {
             setClearAllInputs(false);
         }
     }, [clearAllInputs]);
+
+
+    //  A function used to scroll down to results
+    function scrollDown() {
+        scrollRef.current?.scrollIntoView({ block: "start", behavior: 'smooth' });
+    }
+
+    // Reset all state variables
+    const handleClearAllInputs = () => {
+        setClearAllInputs(true);
+    };
 
 
     // Fetching data from the api
