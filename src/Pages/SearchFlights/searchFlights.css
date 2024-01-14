@@ -82,3 +82,9 @@
     width: fit-content;
 }
 
+.search_form-button{
+    display: flex;
+    padding: 1rem;
+    gap: 50px;
+    justify-content: center;
+}
